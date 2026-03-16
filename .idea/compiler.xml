@@ -2,7 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Annotation profile for Microservice_Employee" enabled="true">
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="EUREKA-SERVER" />
+      </profile>
+      <profile name="Annotation profile for Auth" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -11,12 +18,15 @@
         </processorPath>
         <module name="AddressMicroservices" />
         <module name="Microservice_Employee" />
+        <module name="Auth" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="AddressMicroservices" options="-parameters" />
+      <module name="Auth" options="-parameters" />
+      <module name="EUREKA-SERVER" options="-parameters" />
       <module name="Microservice_Employee" options="-parameters" />
     </option>
   </component>

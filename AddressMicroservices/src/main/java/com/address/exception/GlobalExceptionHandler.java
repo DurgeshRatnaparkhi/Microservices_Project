@@ -51,4 +51,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<Map<String, Object>> handleCustomException(CustomException ex) {
+
+        Map<String, Object> error = new HashMap<>();
+        error.put("timestamp", LocalDateTime.now());
+        error.put("status", HttpStatus.BAD_REQUEST.value());
+        error.put("error", "Bad Request");
+        error.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+
+    }
 }

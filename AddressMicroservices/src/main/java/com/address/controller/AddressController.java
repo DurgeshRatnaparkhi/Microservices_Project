@@ -3,7 +3,6 @@ package com.address.controller;
 import com.address.dto.AddressDto;
 import com.address.dto.AddressRequest;
 import com.address.service.AddressService;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+
 @RequestMapping("addresses")
 public class AddressController {
 
     private final AddressService addressService;
+
+    public AddressController(AddressService addressService) {
+        this.addressService = addressService;
+    }
 
 
     @PostMapping("save")

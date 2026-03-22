@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/EUREKA-SERVER/pom.xml" />
         <option value="$PROJECT_DIR$/Auth/pom.xml" />
         <option value="$PROJECT_DIR$/Microservice_Employee_new/pom.xml" />
+        <option value="$PROJECT_DIR$/API_GATEWAY/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

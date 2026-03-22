@@ -8,14 +8,13 @@ import com.employee.exception.ResourceNotFoundException;
 import com.employee.repository.EmployeeRepository;
 import com.employee.service.EmplolyeeService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
-import java.nio.file.ReadOnlyFileSystemException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +28,7 @@ public class EmployeeServiceImpl implements EmplolyeeService {
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
     private final AddressClient addressClient;
+
 
     @Override
     public EmployeeDto saveEmployee(EmployeeDto employeeDto) {

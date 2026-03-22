@@ -1,0 +1,92 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  main:
+    web-application-type: reactive
+
+  cloud:
+    loadbalancer:
+      enabled: true
+
+      server:
+        error:
+          include-message: always
+
+    gateway:
+      routes:
+        - id: Address_Service
+          uri: lb://ADDRESSMICROSERVICES
+          predicates:
+            - Path=/addresses/**
+          filters:
+            - AuthFilter
+            - name: CircuitBreaker
+              args:
+                name: ADDRESS-SERVICE1
+                fallbackUri: forward:/addressFallback
+
+        - id: Employee
+          uri: http://localhost:8080
+          predicates:
+            - Path=/employees/**
+          filters:
+            - AuthFilter
+            - name: CircuitBreaker
+              args:
+                name: EMPLOYEE-SERVICE1
+                fallbackUri: forward:/employeeFallback
+
+        - id: Auth-Service
+          uri: lb://AUTH
+          predicates:
+            - Path=/auth/**
+
+
+
+    resilience4j:
+      timelimiter:
+        instances:
+          EMPLOYEE-SERVICE1:
+            timeoutDuration: 5s
+          ADDRESS-SERVICE1:
+            timeoutDuration: 5s
+      circuitbreaker:
+        instances:
+          EMPLOYEE-SERVICE1:
+            registerHealthIndicator: true
+            eventConsumerBufferSize: 10
+            slidingWindowSize: 5
+            minimumNumberOfCalls: 5
+            failureRateThreshold: 50
+            waitDurationInOpenState: 6s
+            automaticTransitionFromOpenToHalfOpenEnabled: true
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: COUNT_BASED
+
+          ADDRESS-SERVICE1:
+            registerHealthIndicator: true
+            eventConsumerBufferSize: 10
+            slidingWindowSize: 5
+            minimumNumberOfCalls: 5
+            failureRateThreshold: 50
+            waitDurationInOpenState: 6s
+            automaticTransitionFromOpenToHalfOpenEnabled: true
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: COUNT_BASED
+
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: health,info,metrics,circuitbreakers
+      health:
+        circuitbreakers:
+          enabled: true
+      endpoint:
+        health:
+          show-details: always

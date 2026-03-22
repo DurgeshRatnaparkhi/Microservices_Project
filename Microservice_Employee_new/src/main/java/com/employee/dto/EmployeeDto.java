@@ -1,10 +1,15 @@
 package com.employee.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Data
+@Getter
+@Setter
+
 public class EmployeeDto {
 
     private Long id;
@@ -14,4 +19,6 @@ public class EmployeeDto {
     private String companyName;
 
     private List<AddressDto> addresses;
+
+
 }

@@ -1,10 +1,8 @@
 package com.employee.controller;
 
 import com.employee.dto.EmployeeDto;
-import com.employee.entity.Employee;
 import com.employee.exception.MissingParameterException;
 import com.employee.service.EmplolyeeService;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -24,11 +22,15 @@ public class EmployeeController {
 
     private final EmplolyeeService emplolyeeService;
 
+    public EmployeeController(EmplolyeeService emplolyeeService) {
+        this.emplolyeeService = emplolyeeService;
+    }
+
+
     @PostMapping
     public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto employeeDto) {
         log.info("POST /api/v1/employees - create employee: {}", employeeDto);
         EmployeeDto savedEmployee = emplolyeeService.saveEmployee(employeeDto);
-        log.info("Employee created with id={}", savedEmployee.getId());
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
 
     }
@@ -52,7 +54,6 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
         log.info("PUT /api/v1/employees/{} - update employee: {}", id, employeeDto);
         EmployeeDto updatedEmployee = emplolyeeService.updateEmployee(id, employeeDto);
-        log.info("Employee updated with id={}", updatedEmployee.getId());
         return ResponseEntity.ok(updatedEmployee);
     }
 
